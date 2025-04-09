@@ -2,7 +2,7 @@ import aiosqlite
 import logging
 from datetime import datetime
 
-DB_PATH = "skazka.db"
+DB_PATH = "../skazka.db"
 
 async def init_db():
     async with aiosqlite.connect(DB_PATH) as db:

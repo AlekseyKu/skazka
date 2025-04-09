@@ -32,7 +32,7 @@ if not TELEGRAM_TOKEN or not XAI_API_KEY or not YANDEX_API_KEY or not YANDEX_FOL
     raise ValueError("Missing .env tokens")
 
 # Create directory for audio files
-AUDIO_DIR = "audio_files"
+AUDIO_DIR = "../audio_files"
 if not os.path.exists(AUDIO_DIR):
     os.makedirs(AUDIO_DIR)
 

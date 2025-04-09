@@ -2,18 +2,19 @@ Skazka/
 │
 ├── bot/                      # 👾 Вся логика Telegram-бота
 │   ├── handlers/             #     Обработчики команд
-│   │   ├── tale.py
-│   │   ├── named_tale.py
-│   │   ├── subscription.py
 │   │   ├── coins.py
 │   │   ├── collection.py
-│   │   └── misc.py           #     /help, /voice, fallback и прочее
+│   │   ├── misc.py           #     /help, /voice, fallback и прочее
+│   │   ├── named_tale.py
+│   │   ├── night.py
+│   │   ├── subscription.py
+│   │   └── tale.py
 │   │
 │   ├── keyboards/            #     Кнопки и клавиатуры
 │   │   └── main_menu.py
 │   │
-│   ├── states.py             #     FSM состояния
-│   └── router.py             #     Регистрация всех хендлеров
+│   ├── router.py             #     Регистрация всех хендлеров, Роутинг
+│   └── states.py             #     FSM состояния
 │
 ├── core/                     # 🧠 Ядро: генерация, озвучка, AI
 │   ├── ai.py                 #     Генерация сказок через OpenAI
@@ -26,7 +27,7 @@ Skazka/
 ├── audio_files/             # 🎵 Генерируемые аудиофайлы
 │
 ├── config.py                # ⚙️ Конфиг и env loader
-├── main.py                  # 🚀 Точка запуска (было app.py)
+├── main.py                  # 🚀 Точка запуска
 ├── requirements.txt
 ├── .gitignore
 └── .env
