@@ -11,7 +11,7 @@ async def tell_named_tale(message: types.Message, state: FSMContext):
     user = await db.get_user(message.from_user.id)
     subscription, coins = user[1], user[3]
 
-    if subscription == "free" or (subscription != "premium" and coins < 2):
+    if subscription == "free" and coins < 2:
         await message.answer("Для именной сказки нужно 2 монеты или Премиум-подписка. Проверьте — /coins или /subscribe")
     else:
         await message.answer("🧸 Как зовут главного героя сказки?")

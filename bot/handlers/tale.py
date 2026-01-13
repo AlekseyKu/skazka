@@ -32,8 +32,10 @@ async def tell_tale(message: types.Message, state: FSMContext):
         await db.add_user(message.from_user.id)
         user = await db.get_user(message.from_user.id)
 
-    if user[1] == "free":
-        await message.answer("Эта функция доступна только для подписчиков. Оформите подписку — /subscribe")
+    subscription, coins = user[1], user[3]
+    
+    if subscription == "free" and coins < 1:
+        await message.answer("Для этой функции нужна подписка или минимум 1 монета. Проверьте — /coins или /subscribe")
     else:
         await state.set_state(DialogState.awaiting_theme)
         await state.update_data(message_count=0)

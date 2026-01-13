@@ -1,4 +1,30 @@
 from aiogram import types
+from bot.keyboards.main_menu import (
+    main_menu,
+    tales_menu,
+    account_menu,
+    settings_menu,
+    BUTTON_TALES_MENU,
+    BUTTON_ACCOUNT_MENU,
+    BUTTON_SETTINGS_MENU,
+    BUTTON_BACK,
+)
+
+
+async def show_tales_menu(message: types.Message):
+    await message.answer("📖 Выберите тип сказки:", reply_markup=tales_menu)
+
+
+async def show_account_menu(message: types.Message):
+    await message.answer("👤 Управление аккаунтом:", reply_markup=account_menu)
+
+
+async def show_settings_menu(message: types.Message):
+    await message.answer("⚙️ Настройки:", reply_markup=settings_menu)
+
+
+async def back_to_main_menu(message: types.Message):
+    await message.answer("🔙 Возврат в главное меню", reply_markup=main_menu)
 
 
 async def choose_voice(message: types.Message):
