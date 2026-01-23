@@ -62,7 +62,7 @@
 - **FastAPI** 0.115+ - современный асинхронный веб-фреймворк
 - **SQLAlchemy** 2.0+ (async) - ORM для работы с БД
 - **Alembic** - миграции базы данных
-- **PostgreSQL** - основная БД (SQLite для dev, опционально)
+- **PostgreSQL** - основная БД (SQLite остаётся только как legacy-справка)
 - **Pydantic** v2 - валидация данных и сериализация
 - **python-jose** + **passlib** - JWT аутентификация
 - **AsyncPG** - асинхронный драйвер PostgreSQL
@@ -90,149 +90,125 @@
 ## 📁 Структура проекта
 
 ```
-d:\projects\skazka_tg\        # Корень монорепозитория
+c:\AK\Projects\Skazka\        # Корень монорепозитория
 ├── .git\                     # Git репозиторий
 ├── .gitignore
 ├── docker-compose.yml
 ├── docker-compose.dev.yml    # Для разработки
+├── docker-compose.prod.yml   # Для production
 ├── .env.example
 ├── README.md                 # Общий README проекта
 │
-├── skazka\                   # Telegram бот (legacy, удалить после миграции)
-│   ├── bot/
-│   ├── core/
-│   ├── db/
-│   ├── main.py
-│   └── requirements.txt
+├── bot\                      # Текущий Telegram бот (legacy, мигрируем)
+│   ├── handlers/
+│   ├── keyboards/
+│   ├── router.py
+│   ├── states.py
+│   └── ...
 │
-├── bot\                      # Telegram бот (новый, обновленная версия)
-│   ├── bot/
-│   ├── core/                 # Может ссылаться на shared/core
-│   ├── db/
-│   ├── main.py
-│   └── requirements.txt
+├── core\                     # Текущая shared-логика (будет вынесена в shared/)
+│   ├── ai.py
+│   └── tts.py
+│
+├── db\                       # Текущие модели/запросы (legacy)
+│   ├── models.py
+│   └── queries.py
 │
 ├── api/                      # FastAPI Backend (новый)
 │   ├── app/
-│   │   ├── __init__.py
 │   │   ├── main.py          # FastAPI приложение
-│   │   ├── config.py        # Конфигурация
-│   │   ├── dependencies.py  # Зависимости (DB, auth)
-│   │   │
-│   │   ├── api/             # API роуты
-│   │   │   ├── v1/
-│   │   │   │   ├── __init__.py
-│   │   │   │   ├── tales.py        # Эндпоинты сказок
-│   │   │   │   ├── users.py        # Эндпоинты пользователей
-│   │   │   │   ├── collections.py  # Эндпоинты коллекции
-│   │   │   │   └── auth.py         # Аутентификация
-│   │   │   └── deps.py      # Зависимости роутов
-│   │   │
-│   │   ├── core/
-│   │   │   ├── database.py  # SQLAlchemy setup
-│   │   │   ├── security.py  # JWT, пароли
-│   │   │   ├── config.py    # Настройки
-│   │   │   └── models.py    # SQLAlchemy модели
-│   │   │
+│   │   ├── core/            # База, безопасность, модели
+│   │   ├── api/             # Роуты
 │   │   ├── schemas/         # Pydantic схемы
-│   │   │   ├── tale.py
-│   │   │   ├── user.py
-│   │   │   └── auth.py
-│   │   │
 │   │   └── services/        # Бизнес-логика
-│   │       ├── tale_service.py
-│   │       ├── user_service.py
-│   │       └── ai_service.py  # Переиспользование из core/
-│   │
 │   ├── alembic/             # Миграции БД
-│   │   ├── versions/
-│   │   └── env.py
-│   │
 │   ├── requirements.txt
 │   └── Dockerfile
 │
-├── mini-app/                # React Frontend (новый)
+├── mini-app/                 # React Frontend (новый)
 │   ├── public/
-│   │   └── index.html
 │   ├── src/
-│   │   ├── main.tsx
-│   │   ├── App.tsx
-│   │   │
-│   │   ├── app/             # Конфигурация приложения
-│   │   │   ├── router.tsx
-│   │   │   └── queryClient.ts
-│   │   │
-│   │   ├── features/        # Функциональные модули
-│   │   │   ├── auth/
-│   │   │   │   ├── components/
-│   │   │   │   └── hooks/
-│   │   │   ├── tales/
-│   │   │   │   ├── components/
-│   │   │   │   ├── hooks/
-│   │   │   │   └── api.ts
-│   │   │   ├── collection/
-│   │   │   ├── profile/
-│   │   │   └── settings/
-│   │   │
-│   │   ├── shared/          # Общие компоненты
-│   │   │   ├── components/
-│   │   │   │   ├── Layout.tsx
-│   │   │   │   ├── Button.tsx
-│   │   │   │   └── Card.tsx
-│   │   │   ├── hooks/
-│   │   │   │   └── useTelegram.ts
-│   │   │   ├── api/
-│   │   │   │   └── client.ts
-│   │   │   └── types/
-│   │   │
-│   │   └── assets/
-│   │       └── styles/
-│   │           └── index.css
-│   │
 │   ├── package.json
-│   ├── tsconfig.json
-│   ├── tailwind.config.js
 │   ├── vite.config.ts
 │   └── Dockerfile
 │
-├── shared/                  # Общий код
-│   └── core/               # Переиспользование AI/TTS логики
-│       ├── ai.py
-│       └── tts.py
+├── shared/                   # Общий код
+│   └── core/                # Переиспользование AI/TTS логики
 │
-├── scripts/                 # Вспомогательные скрипты
-│   └── setup.sh            # Скрипт первоначальной настройки
+├── docs/                     # Документация
+│   ├── DEVELOPMENT_PLAN.md   # Основная версия плана
+│   ├── API.md
+│   └── DEPLOYMENT.md
 │
-├── docs/                    # Документация
-│   ├── DEVELOPMENT_PLAN.md # Этот файл (переместить сюда)
-│   ├── API.md              # Документация API
-│   └── DEPLOYMENT.md       # Инструкции по деплою
-│
-├── audio_files/            # Сгенерированные аудиофайлы (dev)
-│   └── ...                 # В production: объектное хранилище (S3/Yandex Object Storage)
-│
-├── docker-compose.yml       # Оркестрация контейнеров
-├── docker-compose.dev.yml   # Для разработки
-├── nginx/
-│   └── nginx.conf          # Конфигурация Nginx
-│
-├── .env.example            # Пример переменных окружения
-├── .gitignore
-├── README.md
-└── DEVELOPMENT_PLAN.md     # Этот файл (переместить в docs/)
+├── scripts/                  # Вспомогательные скрипты
+├── nginx/                    # Конфигурация Nginx
+├── audio_files/              # Сгенерированные аудиофайлы (dev)
+├── skazka.db                 # Текущая SQLite (только для справки)
+└── ...                       # Прочие файлы проекта
 ```
 
 ## 📝 План разработки
 
+### Решения и допущения
+- Основная БД — PostgreSQL; SQLite используется только как legacy-справка.
+- Основная версия плана хранится в `docs/DEVELOPMENT_PLAN.md`.
+- Источник истины для AI/TTS — `shared/core/` (после переноса из `core/`).
+- Разработка ведётся через Docker (`docker-compose.dev.yml`), деплой — через `docker-compose.prod.yml`.
+
+### Рекомендуемый старт и поэтапное решение
+
+**Цель старта:** как можно раньше получить рабочий контур (Docker → API → БД → Mini App) и дальше расширять функционал.
+
+1. **Скелет проекта и окружение (День 1)**
+   - Базовая структура репозитория, `.env.example`, общий `.gitignore`.
+   - Docker Compose для dev: PostgreSQL + API + Mini App (пустые приложения).
+   - Проверка, что всё поднимается одной командой.
+
+2. **БД и миграции (День 1–2)**
+   - SQLAlchemy модели по текущей схеме.
+   - Alembic и первая миграция (только структура таблиц/полей, без переноса данных).
+   - Тест подключения и CRUD для одной сущности.
+
+3. **Базовый API (День 2–3)**
+   - Авторизация через Telegram (`WebApp.initData`).
+   - Минимальные эндпоинты: `/users/me`, `/tales`, `/collection`.
+   - Проверка доступа и простая бизнес-логика.
+
+4. **Мини App каркас (День 3–4)**
+   - React + Tailwind + Router + React Query.
+   - Экран профиля и списка коллекции.
+   - Интеграция с API и показ данных.
+
+5. **Интеграция и генерация (День 4–7)**
+   - Подключение `shared/core` для генерации и озвучки.
+   - Эндпоинты генерации сказок.
+   - UI для создания сказок и отображения результата.
+
+6. **Стабилизация и подготовка к деплою (День 7+)**
+   - Ошибки, логирование, CORS, healthchecks.
+   - Docker prod, Nginx, базовые тесты.
+   - Документация и инструкции запуска.
+
+### Границы MVP
+- Авторизация через Telegram (WebApp.initData)
+- Просмотр коллекции сказок
+- Генерация новой сказки
+- Базовый профиль пользователя
+
+### За рамками MVP (сразу не делаем)
+- Перенос данных из SQLite
+- Сложная аналитика и админ-панель
+- Расширенные настройки и уведомления
+
 ### Этап 1: Подготовка инфраструктуры (1-2 дня)
 
 #### 1.0. Создание структуры проекта
-- [ ] Создать монорепозиторий в `skazka_tg/`
-- [ ] Скопировать `skazka/` → `bot/` (Фаза 1 миграции)
+- [ ] Использовать текущий репозиторий как корень монорепозитория
+- [ ] Если legacy ещё в `skazka/`, скопировать → `bot/` (Фаза 1 миграции)
 - [ ] Создать структуру папок (`api/`, `mini-app/`, `shared/`, `docs/`, `scripts/`, `nginx/`, `audio_files/`)
 - [ ] Создать общий `.gitignore`
 - [ ] Создать `README.md` в корне
-- [ ] Переместить `DEVELOPMENT_PLAN.md` в `docs/`
+- [ ] Переместить `DEVELOPMENT_PLAN.md` в `docs/` и считать версией по умолчанию
 - [ ] Создать `.env.example` с примерами переменных окружения
 
 #### 1.1. Настройка Backend структуры
@@ -241,6 +217,7 @@ d:\projects\skazka_tg\        # Корень монорепозитория
 - [ ] Создать базовую конфигурацию (config.py)
 - [ ] Настроить логирование
 - [ ] Создать requirements.txt для API
+ - [ ] Зафиксировать базовые DTO/схемы ответов (users, tales, collection)
 
 #### 1.2. Вынос общего кода (Фаза 3 миграции)
 - [ ] Создать `shared/core/`
@@ -254,11 +231,14 @@ d:\projects\skazka_tg\        # Корень монорепозитория
 - [ ] Настроить Alembic
 - [ ] Создать начальные миграции для всех таблиц
 - [ ] Применить миграции для создания структуры БД
+- [ ] Данные из SQLite не переносим — только создание таблиц и полей
 - [ ] Протестировать подключение к PostgreSQL
 
 #### 1.4. Настройка Docker
 - [ ] Создать Dockerfile для API
 - [ ] Создать docker-compose.yml
+- [ ] Создать docker-compose.dev.yml (hot-reload для API и Mini App)
+- [ ] Создать docker-compose.prod.yml (оптимизированные образы)
 - [ ] Настроить PostgreSQL в Docker
 - [ ] Настроить volumes для БД
 - [ ] Протестировать запуск в Docker
@@ -294,6 +274,7 @@ d:\projects\skazka_tg\        # Корень монорепозитория
 - [ ] GET /api/v1/collection/{id} - детали из коллекции
 - [ ] DELETE /api/v1/collection/{id} - удаление из коллекции
 - [ ] POST /api/v1/collection/{id}/favorite - добавить в избранное
+ - [ ] Сначала read-only эндпоинты, затем операции изменения
 
 #### 2.5. Интеграция с существующей логикой
 - [ ] Переиспользовать shared/core/ai.py для генерации
@@ -446,6 +427,8 @@ d:\projects\skazka_tg\        # Корень монорепозитория
    - Обновить импорты в `bot/`
    - Обновить импорты в `api/`
 
+**Важно:** перенос данных из SQLite не выполняется — создаём только структуру таблиц и полей в PostgreSQL.
+
 4. **Фаза 4: Интеграция** (Этап 5)
    - Добавить кнопку Mini App в меню `bot/`
    - Настроить синхронизацию данных
@@ -466,10 +449,10 @@ d:\projects\skazka_tg\        # Корень монорепозитория
 ## 📊 Приоритеты разработки
 
 ### MVP (Minimum Viable Product)
-1. ✅ Аутентификация через Telegram
-2. ✅ Просмотр коллекции сказок
-3. ✅ Генерация новой сказки
-4. ✅ Базовый профиль пользователя
+1. Аутентификация через Telegram
+2. Просмотр коллекции сказок
+3. Генерация новой сказки
+4. Базовый профиль пользователя
 
 ### Вторая очередь
 5. Детальный просмотр сказок
@@ -660,8 +643,8 @@ audio_files/ (в bucket)
 
 ### Локальная разработка
 ```bash
-# Запуск всех сервисов через Docker
-docker-compose up
+# Запуск всех сервисов через Docker (dev)
+docker-compose -f docker-compose.dev.yml up
 
 # Или отдельно:
 # Backend
