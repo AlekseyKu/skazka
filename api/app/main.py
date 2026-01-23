@@ -8,10 +8,10 @@ from app.core.logging import setup_logging
 setup_logging(settings.debug)
 app = FastAPI(title=settings.api_title)
 
-if settings.cors_origins:
+if settings.cors_origins_list:
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.cors_origins,
+        allow_origins=settings.cors_origins_list,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

@@ -15,8 +15,6 @@ services:
       context: ./api
     env_file:
       - .env.example
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
     volumes:
       - ./api:/app
     ports:

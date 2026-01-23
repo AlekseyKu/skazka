@@ -1,9 +1,13 @@
 from __future__ import with_statement
 
 import asyncio
+import sys
+from pathlib import Path
 
 from alembic import context
 from sqlalchemy.ext.asyncio import async_engine_from_config
+
+sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from app.core.config import settings
 from app.core.database import Base
