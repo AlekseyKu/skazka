@@ -238,6 +238,7 @@ c:\AK\Projects\Skazka\        # Корень монорепозитория
 
 #### 1.4. Настройка Docker
 - [x] Создать Dockerfile для API
+- [x] Создать Dockerfile для бота
 - [ ] Создать docker-compose.yml
 - [x] Создать docker-compose.dev.yml (hot-reload для API и Mini App)
 - [ ] Создать docker-compose.prod.yml (оптимизированные образы)
@@ -245,39 +246,41 @@ c:\AK\Projects\Skazka\        # Корень монорепозитория
 - [x] Настроить volumes для БД
 - [x] Протестировать запуск в Docker
 - [x] Проверка: `docker-compose.dev.yml` поднимает API+DB+Mini App
+- [x] Добавить сервис бота в docker-compose.dev.yml
+- [x] Проверка: бот запускается в контейнере и получает апдейты
 
 ### Этап 2: Backend API - Базовая функциональность (3-5 дней)
 
 #### 2.1. Аутентификация
-- [ ] Реализовать JWT токены (access + refresh)
-- [ ] Создать эндпоинт аутентификации через Telegram (WebApp.initData)
-- [ ] Реализовать middleware для проверки JWT
-- [ ] Создать эндпоинт обновления токена
-- [ ] Настроить CORS для Mini App
+- [x] Реализовать JWT токены (access + refresh)
+- [x] Создать эндпоинт аутентификации через Telegram (WebApp.initData)
+- [x] Реализовать middleware для проверки JWT
+- [x] Создать эндпоинт обновления токена
+- [x] Настроить CORS для Mini App
 - [ ] Написать тесты для аутентификации
 - [ ] Проверка: успешный login/refresh с тестовыми initData
 
 #### 2.2. Эндпоинты пользователей
-- [ ] GET /api/v1/users/me - информация о текущем пользователе
-- [ ] GET /api/v1/users/me/stats - статистика пользователя
-- [ ] PATCH /api/v1/users/me - обновление профиля
-- [ ] Создать Pydantic схемы для пользователей
+- [x] GET /api/v1/users/me - информация о текущем пользователе
+- [x] GET /api/v1/users/me/stats - статистика пользователя
+- [x] PATCH /api/v1/users/me - обновление профиля
+- [x] Создать Pydantic схемы для пользователей
 - [ ] Интегрировать с существующей БД
 - [ ] Проверка: /users/me возвращает пользователя по токену
 
 #### 2.3. Эндпоинты сказок
-- [ ] GET /api/v1/tales - список сказок (пагинация, фильтры)
-- [ ] GET /api/v1/tales/{id} - детали сказки
-- [ ] POST /api/v1/tales/generate - генерация новой сказки
-- [ ] POST /api/v1/tales/generate/named - генерация именной сказки
-- [ ] POST /api/v1/tales/generate/night - сказка на ночь
-- [ ] GET /api/v1/tales/random - случайная сказка
-- [ ] Создать Pydantic схемы для сказок
+- [x] GET /api/v1/tales - список сказок (пагинация, фильтры)
+- [x] GET /api/v1/tales/{id} - детали сказки
+- [x] POST /api/v1/tales/generate - генерация новой сказки
+- [x] POST /api/v1/tales/generate/named - генерация именной сказки
+- [x] POST /api/v1/tales/generate/night - сказка на ночь
+- [x] GET /api/v1/tales/random - случайная сказка
+- [x] Создать Pydantic схемы для сказок
 - [ ] Проверка: /tales отдает список без ошибок
 
 #### 2.4. Эндпоинты коллекции
-- [ ] GET /api/v1/collection - коллекция пользователя
-- [ ] GET /api/v1/collection/{id} - детали из коллекции
+- [x] GET /api/v1/collection - коллекция пользователя
+- [x] GET /api/v1/collection/{id} - детали из коллекции
 - [ ] DELETE /api/v1/collection/{id} - удаление из коллекции
 - [ ] POST /api/v1/collection/{id}/favorite - добавить в избранное
  - [ ] Сначала read-only эндпоинты, затем операции изменения
@@ -368,10 +371,13 @@ c:\AK\Projects\Skazka\        # Корень монорепозитория
 ### Этап 5: Интеграция и оптимизация (2-3 дня)
 
 #### 5.1. Интеграция бота и Mini App
-- [ ] Добавить кнопку Mini App в меню бота
+- [ ] Команда /start с кнопкой запуска Mini App
+- [ ] Добавить кнопку WebApp в меню бота
 - [ ] Настроить переход из бота в Mini App
+- [ ] Обработка deep links (если потребуется)
 - [ ] Синхронизация данных между ботом и Mini App
-- [ ] Обработка deep links
+- [ ] Проверка: из бота открывается Mini App
+ - [ ] Примечание: до этой точки интерфейс бота остаётся legacy
 
 #### 5.2. Оптимизация
 - [ ] Оптимизация загрузки (code splitting)

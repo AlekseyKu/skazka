@@ -8,3 +8,5 @@ pydantic-settings==2.6.1
 python-jose==3.3.0
 passlib[bcrypt]==1.7.4
 python-dotenv==1.0.1
+openai==1.67.0
+requests==2.32.5
