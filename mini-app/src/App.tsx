@@ -1,8 +1,7 @@
+import { RouterProvider } from "react-router-dom";
+
+import { router } from "./app/router";
+
 export default function App() {
-  return (
-    <main style={{ padding: "24px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Skazka Mini App</h1>
-      <p>Development skeleton is running.</p>
-    </main>
-  );
+  return <RouterProvider router={router} />;
 }

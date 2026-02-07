@@ -3,9 +3,10 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.config import settings
 from app.core.database import get_session
 from app.core.security import decode_token
-from app.services.user_service import get_user_by_id
+from app.services.user_service import get_or_create_user, get_user_by_id
 
 bearer_scheme = HTTPBearer(auto_error=False)
 
@@ -15,6 +16,8 @@ async def get_current_user(
     session: AsyncSession = Depends(get_session),
 ):
     if not credentials or credentials.scheme.lower() != "bearer":
+        if settings.environment == "development":
+            return await get_or_create_user(session, user_id=1)
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Missing bearer token")
 
     try:

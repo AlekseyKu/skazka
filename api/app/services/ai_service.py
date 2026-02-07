@@ -10,9 +10,18 @@ from openai import OpenAI
 from app.core.config import settings
 
 
-def generate_fairytale(theme: str, message_count: int, is_named: bool = False) -> str:
+def _build_ai_client() -> tuple[OpenAI, str]:
+    if settings.aliceai_api_key:
+        kwargs = {"api_key": settings.aliceai_api_key}
+        if settings.aliceai_base_url:
+            kwargs["base_url"] = settings.aliceai_base_url
+        return OpenAI(**kwargs), settings.aliceai_model_uri
     if not settings.openai_api_key:
-        raise ValueError("OPENAI_API_KEY is not configured")
+        raise ValueError("OPENAI_API_KEY or ALICEAI_API_KEY is not configured")
+    return OpenAI(api_key=settings.openai_api_key), "gpt-3.5-turbo"
+
+
+def generate_fairytale(theme: str, message_count: int, is_named: bool = False) -> str:
 
     system_prompt = (
         "Ты — хранитель русских народных традиций и мастер сказочного повествования. "
@@ -23,10 +32,10 @@ def generate_fairytale(theme: str, message_count: int, is_named: bool = False) -
     if is_named:
         system_prompt += "\nСделай сказку именной — используй имя, которое предоставил пользователь, как главного героя."
 
-    client = OpenAI(api_key=settings.openai_api_key)
     try:
+        client, model = _build_ai_client()
         completion = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model=model,
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": f"Сообщение номер {message_count}: {theme}"},

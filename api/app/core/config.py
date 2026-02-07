@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     admin_id: str | None = None
 
     openai_api_key: str | None = None
+    aliceai_api_key: str | None = None
+    aliceai_base_url: str | None = None
+    aliceai_model_uri: str = "gpt://b1gc1of1a12n9rjct0qv/aliceai-llm/latest"
     ai_token: str | None = None
     yandex_api_key: str | None = None
     yandex_folder_id: str | None = None

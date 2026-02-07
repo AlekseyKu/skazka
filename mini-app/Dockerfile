@@ -3,7 +3,10 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm config set fetch-retries 5 \
+    && npm config set fetch-timeout 120000 \
+    && npm config set registry https://registry.npmjs.org/ \
+    && npm install --no-audit --no-fund
 
 COPY . .
 

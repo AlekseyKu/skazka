@@ -9,7 +9,7 @@ from core.ai import get_fairytale
 from core.tts import synthesize_voice_with_yandex
 from db import queries as db
 from aiogram.types import FSInputFile
-from bot.keyboards.main_menu import main_menu
+from bot.keyboards.main_menu import main_menu, mini_app_inline
 import os
 from datetime import datetime
 
@@ -18,11 +18,17 @@ async def start_command(message: types.Message, state: FSMContext):
     await db.add_user(message.from_user.id)
     await state.clear()
     await state.update_data(message_count=0)
-    await message.answer(
+    welcome_text = (
         "✨ Добро пожаловать в “Портал в Сказку”!\n"
         "Я расскажу волшебные сказки голосами Кота Баюна и Русалки.\n"
-        "Выбирайте — и откроем портал…",
-        reply_markup=main_menu
+        "Выбирайте — и откроем портал…"
+    )
+    if mini_app_inline:
+        welcome_text += "\n\nНажмите кнопку Mini App ниже, чтобы открыть приложение."
+
+    await message.answer(
+        welcome_text,
+        reply_markup=mini_app_inline if mini_app_inline else main_menu,
     )
 
 

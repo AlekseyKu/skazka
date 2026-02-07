@@ -8,7 +8,9 @@ from bot.keyboards.main_menu import (
     BUTTON_ACCOUNT_MENU,
     BUTTON_SETTINGS_MENU,
     BUTTON_BACK,
+    BUTTON_MINI_APP,
 )
+from config import WEBAPP_URL
 
 
 async def show_tales_menu(message: types.Message):
@@ -24,7 +26,7 @@ async def show_settings_menu(message: types.Message):
 
 
 async def back_to_main_menu(message: types.Message):
-    await message.answer("🔙 Возврат в главное меню", reply_markup=main_menu)
+    await message.answer("🔙 Возврат в главное меню", reply_markup=main_menu if main_menu else None)
 
 
 async def choose_voice(message: types.Message):
@@ -43,3 +45,10 @@ async def show_help(message: types.Message):
 
 async def fallback_handler(message: types.Message):
     await message.answer("Я понимаю только команды и кнопки из меню. Попробуйте /start или выберите действие!")
+
+
+async def open_mini_app(message: types.Message):
+    if WEBAPP_URL:
+        await message.answer(f"Открыть Mini App: {WEBAPP_URL}")
+    else:
+        await message.answer("WEBAPP_URL не настроен. Укажите его в .env")

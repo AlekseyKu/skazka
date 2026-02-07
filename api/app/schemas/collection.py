@@ -11,3 +11,4 @@ class CollectionItemRead(BaseModel):
     audio_path: str | None = None
     type: str
     date: datetime
+    is_favorite: bool = False

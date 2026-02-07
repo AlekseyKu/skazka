@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_session
 from app.core.dependencies import get_current_user
 from app.schemas.collection import CollectionItemRead
-from app.services.user_service import get_tale_by_id, list_user_tales
+from app.services.user_service import delete_tale, get_tale_by_id, list_user_tales, set_tale_favorite
 
 
 router = APIRouter(prefix="/collection", tags=["collection"])
@@ -29,3 +29,28 @@ async def get_collection_item(
     if not tale:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
     return CollectionItemRead.model_validate(tale)
+
+
+@router.delete("/{tale_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_collection_item(
+    tale_id: int,
+    session: AsyncSession = Depends(get_session),
+    current_user=Depends(get_current_user),
+) -> None:
+    tale = await get_tale_by_id(session, current_user.user_id, tale_id)
+    if not tale:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
+    await delete_tale(session, tale)
+
+
+@router.post("/{tale_id}/favorite", response_model=CollectionItemRead)
+async def favorite_collection_item(
+    tale_id: int,
+    session: AsyncSession = Depends(get_session),
+    current_user=Depends(get_current_user),
+) -> CollectionItemRead:
+    tale = await get_tale_by_id(session, current_user.user_id, tale_id)
+    if not tale:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
+    updated = await set_tale_favorite(session, tale, True)
+    return CollectionItemRead.model_validate(updated)

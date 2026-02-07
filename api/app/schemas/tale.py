@@ -11,6 +11,8 @@ class TaleRead(BaseModel):
     audio_path: str | None = None
     type: str
     date: datetime
+    is_favorite: bool
+    is_favorite: bool = False
 
 
 class GenerateTaleRequest(BaseModel):

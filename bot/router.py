@@ -16,12 +16,14 @@ from bot.keyboards.main_menu import (
     BUTTON_ACCOUNT_MENU,
     BUTTON_SETTINGS_MENU,
     BUTTON_BACK,
+    BUTTON_MINI_APP,
 )
 
 
 def setup_routers(dp: Dispatcher):
     # Основные хендлеры
     dp.message.register(tale.start_command, F.text == "/start")
+    dp.message.register(misc.open_mini_app, F.text == BUTTON_MINI_APP)
     
     # Меню и навигация
     dp.message.register(misc.show_tales_menu, F.text == BUTTON_TALES_MENU)

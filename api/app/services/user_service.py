@@ -45,3 +45,16 @@ async def list_user_tales(session: AsyncSession, user_id: int, limit: int = 50) 
 async def get_tale_by_id(session: AsyncSession, user_id: int, tale_id: int) -> Tale | None:
     result = await session.execute(select(Tale).where(Tale.user_id == user_id, Tale.id == tale_id))
     return result.scalar_one_or_none()
+
+
+async def delete_tale(session: AsyncSession, tale: Tale) -> None:
+    await session.delete(tale)
+    await session.commit()
+
+
+async def set_tale_favorite(session: AsyncSession, tale: Tale, is_favorite: bool = True) -> Tale:
+    tale.is_favorite = is_favorite
+    session.add(tale)
+    await session.commit()
+    await session.refresh(tale)
+    return tale
