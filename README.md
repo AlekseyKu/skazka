@@ -46,6 +46,56 @@ skazka/
 └── requirements.txt        # Зависимости проекта
 ```
 
+## 🐳 Запуск через Docker (dev)
+
+> Актуально для текущей разработки (API + Mini App + Postgres + Bot).
+
+### 1) Подготовьте `.env`
+
+- Скопируйте `.env.example` в `.env`
+- Заполните ключи: `BOT_TOKEN`, `ADMIN_ID`, `OPENAI_API_KEY`, `YANDEX_API_KEY`, `YANDEX_FOLDER_ID`
+
+### 2) Запуск контейнеров
+
+```bash
+docker compose -f docker-compose.dev.yml up -d --build
+```
+
+### 3) Проверки
+
+- API: `http://localhost:8000/health`
+- Mini App: `http://localhost:5173`
+- Логи бота:
+```bash
+docker compose -f docker-compose.dev.yml logs --tail=50 bot
+```
+
+### 4) Остановка
+
+```bash
+docker compose -f docker-compose.dev.yml down
+```
+
+## 🧩 Работа только с `mini-app` (sparse-checkout)
+
+Короткая инструкция для фронтенд‑разработчика и/или ИИ: клонируем репозиторий так, чтобы на диске была только папка `mini-app`, а пуш уходит в общий репозиторий.
+
+```bash
+git clone <repo-url>
+cd skazka
+git sparse-checkout init --cone
+git sparse-checkout set mini-app
+```
+
+Дальше работаем и пушим как обычно:
+
+```bash
+git checkout -b feat/mini-...
+git add mini-app
+git commit -m "..."
+git push -u origin feat/mini-...
+```
+
 ## 🚀 Установка и настройка
 
 ### Требования

@@ -1,9 +1,12 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
+
+from config import WEBAPP_URL
 
 # Константы текстов кнопок главного меню
 BUTTON_TALES_MENU = "📖 Сказки"
 BUTTON_ACCOUNT_MENU = "👤 Аккаунт"
 BUTTON_SETTINGS_MENU = "⚙️ Настройки"
+BUTTON_MINI_APP = "🚀 Mini App"
 
 # Константы текстов кнопок подменю "Сказки"
 BUTTON_TELL_TALE = "📖 Расскажи сказку"
@@ -24,12 +27,27 @@ BUTTON_HELP = "ℹ Помощь"
 BUTTON_BACK = "🔙 Главное меню"
 
 # Главное меню
-main_menu = ReplyKeyboardMarkup(
-    keyboard=[
-        [KeyboardButton(text=BUTTON_TALES_MENU)],
-        [KeyboardButton(text=BUTTON_ACCOUNT_MENU), KeyboardButton(text=BUTTON_SETTINGS_MENU)],
-    ],
-    resize_keyboard=True
+mini_app_button = KeyboardButton(text=BUTTON_MINI_APP, web_app=WebAppInfo(url=WEBAPP_URL)) if WEBAPP_URL else None
+
+main_menu = (
+    ReplyKeyboardMarkup(
+        keyboard=[
+            [mini_app_button],
+        ],
+        resize_keyboard=True,
+    )
+    if mini_app_button
+    else None
+)
+
+mini_app_inline = (
+    InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=BUTTON_MINI_APP, web_app=WebAppInfo(url=WEBAPP_URL))],
+        ]
+    )
+    if WEBAPP_URL
+    else None
 )
 
 # Подменю "Сказки"
