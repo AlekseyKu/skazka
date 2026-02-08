@@ -37,7 +37,14 @@ export default function HomePage() {
 
   return (
     <section>
-      <h2>Главная</h2>
+      <div className="hero hero--fullscreen">
+        <div className="hero__bg" />
+        <div className="hero__content">
+          <p className="hero__subtitle">Портал в Сказку</p>
+          <h2 className="hero__title">Волшебные истории</h2>
+          <p className="hero__subtitle">Генерация сказок и коллекция любимых историй</p>
+        </div>
+      </div>
       <Card>
         <p>Выберите тип сказки и создайте новую историю.</p>
         <div className="stack">
