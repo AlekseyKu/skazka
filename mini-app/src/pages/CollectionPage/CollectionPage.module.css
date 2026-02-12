@@ -1,0 +1,101 @@
+.root {
+  min-height: 100vh;
+  padding: var(--space-2xl) var(--page-padding) 120px;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  background: radial-gradient(circle at top, #2e335a 0%, #1c1b33 45%, #0b0a1c 100%);
+  color: #ffffff;
+}
+
+.title {
+  font: var(--text-h1);
+  margin-bottom: var(--space-md);
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: var(--space-lg);
+  overflow-x: auto;
+}
+
+.filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filterChip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+}
+
+.filterChipActive {
+  color: #ffffff;
+  border-color: var(--accent-warm);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.cardText {
+  flex: 1;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardMeta {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.starButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.starIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.empty {
+  margin-top: var(--space-lg);
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+

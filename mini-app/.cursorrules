@@ -1,0 +1,94 @@
+# Project: Портал в Сказку — Telegram Mini App
+
+## Tech Stack
+- React 18 + TypeScript (strict mode)
+- Vite 5 (bundler)
+- react-router-dom 6 (client-side routing)
+- @tanstack/react-query 5 (server state)
+- zustand 4 (client state — auth tokens, player state, UI)
+- @twa-dev/sdk 7 (Telegram Mini App SDK)
+- CSS Modules + CSS Custom Properties (no Tailwind, no styled-components)
+- NO framer-motion — all animations via CSS transitions/keyframes
+
+## Architecture Rules
+1. Each page = folder in src/pages/ with PageName.tsx + PageName.module.css
+2. Shared components in src/shared/components/
+3. API layer in src/shared/api/ — typed fetch wrapper with auth
+4. Hooks in src/shared/hooks/
+5. Stores in src/shared/stores/ (zustand)
+6. All colors, spacing, radii, shadows via CSS Custom Properties in src/styles/variables.css
+7. Mobile-first: design for 360px min-width, max-width 480px
+8. No hover effects as primary UX — only touch
+9. All interactive elements: min touch target 44x44px
+10. All text in Russian language
+
+## API Base URL
+VITE_API_URL env variable. Default: http://localhost:8000
+
+## Auth Flow
+1. On mount: get window.Telegram.WebApp.initData
+2. POST /api/v1/auth/telegram { init_data }
+3. Store access_token + refresh_token in zustand (in-memory, NOT localStorage)
+4. All API calls: Authorization: Bearer {access_token}
+5. On 401: try refresh via /api/v1/auth/refresh, if fails — re-auth via initData
+
+## Telegram Mini App Integration
+- On mount: WebApp.ready(), WebApp.expand()
+- Set WebApp.setHeaderColor('#1c1b33')
+- Set WebApp.setBackgroundColor('#1c1b33')
+- BackButton: show on all pages except Home, handle with router.back()
+- MainButton: use on CreateTalePage and ChildProfilePage
+- HapticFeedback: impactOccurred('light') on nav tap, impactOccurred('medium') on submit, notificationOccurred('success') on generation complete
+- showPopup/showConfirm for destructive actions
+- openLink for external URLs (payment)
+
+## Styling
+- Dark theme only (no light theme support needed)
+- Glassmorphism: backdrop-filter blur(12px), semi-transparent backgrounds
+- Font: Inter Variable (loaded from /fonts/InterVariable.woff2)
+- All images: WebP format, in public/assets/
+- Shimmer skeletons for all loading states
+- Animations: CSS only, max 400ms, ease-out or cubic-bezier spring
+
+## Color Palette
+- --bg-primary: #1c1b33 (main background)
+- --bg-secondary: #2e335a (cards background)
+- --accent-purple: #c159ec (CTA, active states)
+- --accent-blue: #3658b1 (secondary accent)
+- --text-primary: #e0d9ff (main text)
+- --text-secondary: rgba(224, 217, 255, 0.7) (muted text)
+- --glass: rgba(31, 29, 71, 0.65) (glassmorphism bg)
+- --glass-border: rgba(255, 255, 255, 0.12) (borders)
+
+## Background Images per Screen
+- HomeScreen: /assets/backgrounds/portal-main.webp
+- CreateTalePage: /assets/backgrounds/forest-path.webp
+- TaleGenerationPage: /assets/backgrounds/fairy-magic.webp
+- TalePlayerPage: /assets/backgrounds/forest-mist.webp
+- SubscriptionPage: /assets/backgrounds/portal-runes.webp
+- PaywallSheet: /assets/backgrounds/fairy-create.webp
+
+## Character Avatars
+- Кот Баюн: /assets/characters/bayun.webp (glow color: #a78bfa)
+- Леший: /assets/characters/leshiy.webp (glow color: #34d399)
+- Русалка: /assets/characters/rusalka.webp (glow color: #67e8f9)
+- Добрыня: /assets/characters/dobrynya.webp (glow color: #fbbf24)
+
+## Performance Budget
+- Bundle < 150KB gzipped
+- LCP < 1.5s
+- All images lazy-loaded except hero background
+- Font: font-display: swap
+
+## API Endpoints (existing backend)
+- POST /api/v1/auth/telegram — auth via initData
+- POST /api/v1/auth/refresh — refresh tokens
+- GET /api/v1/users/me — current user (subscription, coins, limits)
+- GET /api/v1/tales — user tales list
+- GET /api/v1/tales/:id — single tale
+- POST /api/v1/tales/generate — generate tale { theme, with_audio }
+- POST /api/v1/tales/generate/named — named tale { name, with_audio }
+- POST /api/v1/tales/generate/night — night tale { with_audio }
+- GET /api/v1/collection — user collection
+- DELETE /api/v1/collection/:id — delete from collection
+- POST /api/v1/collection/:id/favorite — toggle favorite

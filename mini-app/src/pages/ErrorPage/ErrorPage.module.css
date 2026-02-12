@@ -1,0 +1,31 @@
+.root {
+  min-height: 100vh;
+  padding: var(--space-2xl) var(--page-padding) 120px;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+  background: radial-gradient(circle at top, #2e335a 0%, #1c1b33 45%, #0b0a1c 100%);
+}
+
+.title {
+  font: var(--text-h1);
+  margin-bottom: var(--space-sm);
+}
+
+.subtitle {
+  font: var(--text-body);
+  color: var(--text-secondary);
+  max-width: 260px;
+  margin-bottom: var(--space-xl);
+}
+
+.button {
+  width: 100%;
+  max-width: 260px;
+}
+

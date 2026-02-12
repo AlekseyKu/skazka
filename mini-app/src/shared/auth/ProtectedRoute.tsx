@@ -1,18 +1,21 @@
-import type React from "react";
+import type { PropsWithChildren } from "react";
 import { Navigate } from "react-router-dom";
 
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./useAuth";
 
-export default function ProtectedRoute({ children }: { children: React.ReactElement }) {
-  const { status } = useAuth();
+export function ProtectedRoute({ children }: PropsWithChildren) {
+  const { isLoading, isAuthorized } = useAuth();
 
-  if (import.meta.env.DEV) {
-    return children;
+  if (isLoading) {
+    return null;
   }
 
-  if (status === "authorized") {
-    return children;
+  if (!isAuthorized) {
+    return <Navigate to="/" replace />;
   }
 
-  return <Navigate to="/profile" replace />;
+  return <>{children}</>;
 }
+
+export default ProtectedRoute;
+

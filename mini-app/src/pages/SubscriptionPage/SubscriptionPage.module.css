@@ -1,0 +1,130 @@
+.root {
+  min-height: 100vh;
+  padding: var(--space-2xl) var(--page-padding) 120px;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  color: #ffffff;
+  background: radial-gradient(circle at top, #2e335a 0%, #1c1b33 45%, #0b0a1c 100%);
+}
+
+.title {
+  font: 600 22px/1.3 var(--font-family);
+  text-align: center;
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.billingToggle {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0 auto 20px;
+}
+
+.billingOption {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.billingOptionActive {
+  background: var(--accent-purple);
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  position: relative;
+  border-radius: 20px;
+  padding: 20px;
+  background: rgba(31, 29, 71, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cardPrice {
+  font-size: 14px;
+}
+
+.badgeCurrent {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.badgePopular {
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background-image: var(--gradient-warm);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cardFeatures {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.feature {
+  display: flex;
+  gap: 6px;
+}
+
+.featureIconOk {
+  color: var(--accent-teal);
+}
+
+.featureIconX {
+  color: var(--text-disabled);
+}
+
+.featureDisabled {
+  color: var(--text-disabled);
+  text-decoration: line-through;
+}
+
+.cardButton {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.cardFamily {
+  border: 2px solid var(--accent-warm);
+}
+
+.savings {
+  font-size: 13px;
+  color: var(--accent-teal);
+  margin-top: 2px;
+}
+
