@@ -1,0 +1,19 @@
+.root {
+  min-height: 100vh;
+  padding: var(--space-2xl) var(--page-padding) 120px;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  color: #ffffff;
+  background: radial-gradient(circle at top, #2e335a 0%, #1c1b33 45%, #0b0a1c 100%);
+}
+
+.title {
+  font: var(--text-h1);
+  margin-bottom: var(--space-md);
+}
+
+.text {
+  font: var(--text-body-sm);
+  color: var(--text-secondary);
+}
+

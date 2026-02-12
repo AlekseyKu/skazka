@@ -1,0 +1,50 @@
+.root {
+  min-height: 100vh;
+  padding: var(--space-2xl) var(--page-padding) 120px;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  color: #ffffff;
+  background: radial-gradient(circle at top, #2e335a 0%, #1c1b33 45%, #0b0a1c 100%);
+}
+
+.title {
+  font: var(--text-h1);
+  margin-bottom: var(--space-sm);
+}
+
+.subtitle {
+  font: var(--text-body-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.card {
+  border-radius: 20px;
+  padding: 16px 18px;
+  background: rgba(31, 29, 71, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: var(--space-md);
+}
+
+.cardTitle {
+  font: var(--text-h2);
+  margin-bottom: 8px;
+}
+
+.cardLine {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.cardMeta {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.tasks {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding-left: 18px;
+}
+

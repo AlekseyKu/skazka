@@ -1,0 +1,177 @@
+.page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.pageBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/backgrounds/forest-mist.webp");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(28, 27, 51, 0.5);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  padding: 32px 16px 120px;
+  color: #ffffff;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  overflow-y: auto;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.heroAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 999px;
+  border: 3px solid var(--glass-border);
+  object-fit: cover;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.heroNarrator {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.heroTitle {
+  margin-top: 8px;
+  font: 600 20px/1.3 var(--font-family);
+  max-width: 280px;
+}
+
+.playerCard {
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+}
+
+.seekbarWrapper {
+  width: 100%;
+}
+
+.seekbar {
+  width: 100%;
+  -webkit-appearance: none;
+  background: transparent;
+}
+
+.seekbar::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.seekbar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  margin-top: -6px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.timeRow {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.controlsMain {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.iconButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controlIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.playButton {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background-image: var(--gradient-cta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playSymbol {
+  font-size: 24px;
+}
+
+.controlsBottom {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.pill {
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+}
+
+.taleTextWrapper {
+  margin-top: 24px;
+}
+
+.taleText {
+  font: var(--text-tale);
+  color: var(--text-primary);
+  white-space: pre-wrap;
+}
+

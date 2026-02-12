@@ -1,0 +1,119 @@
+.page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.pageBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/backgrounds/fairy-magic.webp");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(28, 27, 51, 0.35);
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  padding: 60px 16px 120px;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  color: #ffffff;
+  text-align: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.subtitle {
+  margin-top: 8px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.card {
+  margin-top: 32px;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(31, 29, 71, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: left;
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+}
+
+.cardTitle {
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.cardMeta {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.cardDescription {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.listenButton {
+  margin-top: 16px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  background-image: var(--gradient-cta);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.bottom {
+  margin-top: 20px;
+}
+
+.bottomText {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.subscriptionsLink {
+  margin-top: 4px;
+  background: none;
+  border: none;
+  color: var(--accent-warm);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
